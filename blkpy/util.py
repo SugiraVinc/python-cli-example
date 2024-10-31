@@ -2,6 +2,7 @@ import subprocess
 import shlex
 import json
 
+
 # Create a function that runs subprocess and returns the output
 def run_command(command):
     """Runs a shell command and returns the output."""
@@ -29,13 +30,14 @@ def run_lsblk(device):
         ]
     }
     """
-    command = 'lsblk -J -o NAME,SIZE,TYPE,MOUNTPOINT'
+    command = "lsblk -J -o NAME,SIZE,TYPE,MOUNTPOINT"
     output = run_command(command)
     if output:
-        devices = json.loads(output).get('blockdevices', [])
+        devices = json.loads(output).get("blockdevices", [])
         for parent in devices:
-            if parent['name'] == device:
+            if parent["name"] == device:
                 return parent
-            for child in parent.get('children', []):
-                if child['name'] == device:
-    
+            for child in parent.get("children", []):
+                if child["name"] == device:
+                    return child  # <-- Added this return statement
+    return None  # Return None if device is not found

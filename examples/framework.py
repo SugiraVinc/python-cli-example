@@ -10,6 +10,7 @@ def run_command(command):
     output = subprocess.check_output(cmd)
     return output
 
+
 def run_lsblk(device):
     """
     Runs lsblk command and produces JSON output:
@@ -25,20 +26,20 @@ def run_lsblk(device):
     ]
     }
     """
-    command = f'lsblk -J -o NAME,SIZE,TYPE,MOUNTPOINT'
+    command = f"lsblk -J -o NAME,SIZE,TYPE,MOUNTPOINT"
     output = run_command(command)
-    devices = json.loads(output)['blockdevices']
+    devices = json.loads(output)["blockdevices"]
     for parent in devices:
-        if parent['name'] == device:
+        if parent["name"] == device:
             return parent
-        for child in parent.get('children', []):
-            if child['name'] == device:
+        for child in parent.get("children", []):
+            if child["name"] == device:
                 return child
 
 
 @click.command()
-@click.option('--verbose', '-v', is_flag=True)
-@click.argument('device')
+@click.option("--verbose", "-v", is_flag=True)
+@click.argument("device")
 def main(device, verbose):
     print(f"Device: {device}")
     print(f"Verbose: {verbose}")
