@@ -1,6 +1,4 @@
-from . import sub
-
-# from . import constants
-from .constants import LOG, VERBOSE
+# from . import sub
+# from .constants import LOG, VERBOSE
 
 FOO = True
