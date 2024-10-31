@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:  # Allows manual trigger of the workflow
+  workflow_dispatch:  # Adds a manual trigger for the workflow
 
 jobs:
   build-and-test:
@@ -25,10 +25,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Flake8 linter  # New step for linting
+      - name: Run Black formatter  # New step to auto-format code
         run: |
-          python -m pip install flake8  # Install Flake8 if not in requirements.txt
-          flake8 .  # Run Flake8 on the entire codebase
+          python -m pip install black
+          black .
+
+      - name: Run Flake8 linter
+        run: |
+          python -m pip install flake8
+          flake8 .
 
       - name: Run tests
         run: |
